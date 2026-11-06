@@ -1,0 +1,1234 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Birthday</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --red: #c83d4e;
+        --red-dark: #9f293b;
+        --gold: #d9ae58;
+        --cream: #fffaf3;
+        --pink: #f7e4e5;
+        --ink: #302629;
+        --white: #ffffff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: var(--cream);
+        color: var(--ink);
+        font-family: "Nunito", sans-serif;
+        overflow-x: hidden;
+      }
+
+      button {
+        font-family: "Fredoka", sans-serif;
+        cursor: pointer;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      /* GENERAL */
+
+      .screen {
+        display: none;
+        min-height: 100vh;
+        padding: 100px 20px 45px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        animation: fadeIn 0.7s ease;
+      }
+
+      .screen.active {
+        display: flex;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Fredoka", sans-serif;
+      }
+
+      h1 {
+        font-size: clamp(40px, 8vw, 70px);
+        color: var(--red);
+        line-height: 1.1;
+      }
+
+      h2 {
+        font-size: clamp(30px, 6vw, 43px);
+        color: var(--red);
+      }
+
+      p {
+        line-height: 1.8;
+      }
+
+      .subtitle {
+        color: #928084;
+        margin: 12px 0 30px;
+        max-width: 480px;
+      }
+
+      .card {
+        width: min(100%, 620px);
+        background: white;
+        border: 1px solid #f1e5df;
+        border-radius: 25px;
+        padding: 35px 25px;
+        box-shadow: 0 12px 40px rgba(75, 40, 40, 0.07);
+      }
+
+      .main-btn {
+        border: none;
+        background: var(--red);
+        color: white;
+        padding: 14px 30px;
+        border-radius: 40px;
+        font-size: 17px;
+        box-shadow: 0 5px 0 var(--red-dark);
+        transition: 0.25s;
+      }
+
+      .main-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 0 var(--red-dark);
+      }
+
+      .main-btn:active {
+        transform: translateY(2px);
+        box-shadow: 0 2px 0 var(--red-dark);
+      }
+
+      .outline-btn {
+        border: 1px solid var(--red);
+        color: var(--red);
+        background: white;
+        border-radius: 30px;
+        padding: 12px 25px;
+        font-size: 16px;
+      }
+
+      /* MICKEY SILHOUETTE */
+
+      .mouse {
+        width: 115px;
+        height: 105px;
+        position: relative;
+        margin: 0 auto 25px;
+      }
+
+      .mouse .head {
+        position: absolute;
+        width: 73px;
+        height: 73px;
+        background: var(--ink);
+        border-radius: 50%;
+        bottom: 0;
+        left: 21px;
+        z-index: 2;
+      }
+
+      .mouse .ear {
+        position: absolute;
+        width: 49px;
+        height: 49px;
+        background: var(--ink);
+        border-radius: 50%;
+        top: 0;
+      }
+
+      .mouse .left {
+        left: 0;
+      }
+      .mouse .right {
+        right: 0;
+      }
+
+      /* HEADER */
+
+      .header {
+        position: fixed;
+        z-index: 50;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(255, 250, 243, 0.95);
+        border-bottom: 1px solid #eee1db;
+        padding: 12px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        backdrop-filter: blur(10px);
+      }
+
+      .brand {
+        color: var(--red);
+        font-family: "Fredoka", sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .progress-area {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .progress {
+        width: 110px;
+        height: 7px;
+        border-radius: 20px;
+        background: #eadde0;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: var(--gold);
+        transition: 0.5s;
+      }
+
+      #stepText {
+        font-size: 12px;
+        color: #88777b;
+      }
+
+      /* MUSIC */
+
+      .music-btn {
+        position: fixed;
+        z-index: 60;
+        right: 20px;
+        bottom: 20px;
+        width: 48px;
+        height: 48px;
+        border: none;
+        border-radius: 50%;
+        background: var(--red);
+        color: white;
+        font-size: 21px;
+        box-shadow: 0 4px 15px #c83d4e55;
+      }
+
+      /* LOADING */
+
+      #loading {
+        background: var(--red);
+        color: white;
+        gap: 15px;
+      }
+
+      #loading h2 {
+        color: white;
+        font-size: 30px;
+      }
+
+      .loading-mouse {
+        animation: bounce 1.2s infinite;
+        filter: invert(1);
+      }
+
+      .loading-track {
+        width: 180px;
+        height: 5px;
+        background: #ffffff55;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+
+      .loading-bar {
+        height: 100%;
+        background: var(--gold);
+        animation: load 2.4s ease forwards;
+      }
+
+      @keyframes load {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      @keyframes bounce {
+        50% {
+          transform: translateY(-12px);
+        }
+      }
+
+      /* HOME */
+
+      #home {
+        background:
+          radial-gradient(circle at 10% 20%, #f4e2d9 0 4px, transparent 5px),
+          radial-gradient(circle at 85% 75%, #f1dfbd 0 5px, transparent 6px),
+          var(--cream);
+        position: relative;
+      }
+
+      .home-tag {
+        display: inline-block;
+        color: var(--red);
+        background: var(--pink);
+        border-radius: 30px;
+        padding: 7px 18px;
+        margin-bottom: 20px;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      #home h1 span {
+        color: var(--gold);
+      }
+
+      .home-name {
+        margin-top: 20px;
+        font-family: "Fredoka", sans-serif;
+        font-size: 24px;
+      }
+
+      .home-decoration {
+        position: absolute;
+        font-size: 25px;
+        animation: bounce 3s infinite;
+      }
+
+      .dec1 {
+        left: 12%;
+        top: 25%;
+      }
+      .dec2 {
+        right: 12%;
+        top: 30%;
+        animation-delay: 0.5s;
+      }
+      .dec3 {
+        left: 18%;
+        bottom: 20%;
+        animation-delay: 1s;
+      }
+      .dec4 {
+        right: 18%;
+        bottom: 20%;
+        animation-delay: 0.7s;
+      }
+
+      /* MICKEY JIGSAW PUZZLE */
+      #puzzleScreen {
+        background: #fff6f2;
+      }
+
+      .puzzle-card {
+        width: min(100%, 760px);
+        background: #fff;
+        border: 1px solid #f1e5df;
+        border-radius: 25px;
+        padding: 28px 22px;
+        box-shadow: 0 12px 40px rgba(75, 40, 40, 0.07);
+      }
+      .puzzle-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(180px, 0.85fr);
+        gap: 24px;
+        align-items: center;
+        margin: 18px auto;
+        max-width: 650px;
+      }
+      .puzzle-board {
+        width: 100%;
+        max-width: 340px;
+        aspect-ratio: 488 / 578;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: 2px;
+        padding: 5px;
+        border: 2px solid #d8c6c2;
+        border-radius: 12px;
+        background: #eadfdb;
+        box-shadow: 0 8px 22px rgba(60, 35, 35, 0.12);
+      }
+      .puzzle-slot {
+        min-width: 0;
+        min-height: 0;
+        position: relative;
+        overflow: hidden;
+        background: #f8eeee;
+        border: 1px dashed #cdb8b5;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #b49d9d;
+        font-size: 12px;
+        font-weight: 800;
+        transition: 0.2s;
+      }
+      .puzzle-slot.over {
+        background: #fff0c9;
+        outline: 2px solid var(--gold);
+      }
+      .puzzle-slot.filled {
+        border: 1px solid #fff;
+        background-image: var(--puzzle-image);
+        background-size: 300% 400%;
+        background-position: var(--piece-x) var(--piece-y);
+      }
+      .puzzle-slot .slot-number {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        pointer-events: none;
+        opacity: 0.7;
+      }
+      .puzzle-slot.filled .slot-number {
+        display: none;
+      }
+
+      .piece-tray-wrap {
+        min-width: 0;
+      }
+      .tray-title {
+        font-family: "Fredoka", sans-serif;
+        color: var(--red);
+        margin-bottom: 10px;
+      }
+      .piece-tray {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 9px;
+        justify-items: center;
+        padding: 12px;
+        background: #fff8f5;
+        border: 1px dashed #e4c9c5;
+        border-radius: 15px;
+        min-height: 180px;
+      }
+      .piece {
+        width: 100%;
+        max-width: 92px;
+        aspect-ratio: 488 / 578 * 3; /* overridden by explicit tile ratio below */
+        aspect-ratio: 1 / 1.18;
+        border: 2px solid #fff;
+        border-radius: 5px;
+        box-shadow: 0 3px 9px rgba(55, 35, 35, 0.18);
+        background-image: var(--puzzle-image);
+        background-size: 300% 400%;
+        background-position: var(--piece-x) var(--piece-y);
+        cursor: grab;
+        touch-action: manipulation;
+        transition:
+          transform 0.18s,
+          opacity 0.18s,
+          outline 0.18s;
+      }
+      .piece:hover {
+        transform: translateY(-3px);
+      }
+      .piece.selected {
+        outline: 3px solid var(--gold);
+        transform: scale(1.04);
+      }
+      .piece.used {
+        opacity: 0.2;
+        pointer-events: none;
+        cursor: default;
+      }
+      .puzzle-help {
+        font-size: 13px;
+        color: #938286;
+        margin: 12px 0;
+        line-height: 1.7;
+      }
+      .puzzle-actions {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      #puzzleMessage {
+        font-weight: 800;
+        color: var(--red);
+        margin: 15px 0;
+        min-height: 24px;
+      }
+      @media (max-width: 600px) {
+        .puzzle-card {
+          padding: 22px 14px;
+        }
+        .puzzle-layout {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+        .puzzle-board {
+          width: min(100%, 330px);
+        }
+        .piece-tray {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          min-height: auto;
+        }
+        .piece {
+          max-width: 76px;
+        }
+      }
+
+      /* LETTER */
+
+      #letterScreen {
+        background: #fff1f2;
+      }
+
+      .envelope {
+        width: 180px;
+        height: 125px;
+        position: relative;
+        margin: 30px auto;
+        cursor: pointer;
+        background: var(--red);
+        border-radius: 10px;
+        transition: 0.3s;
+        box-shadow: 0 8px 20px #c83d4e33;
+      }
+
+      .envelope:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-left: 90px solid transparent;
+        border-right: 90px solid transparent;
+        border-top: 72px solid #e46a75;
+        z-index: 2;
+        transform-origin: top;
+        transition: 0.6s;
+      }
+
+      .envelope:after {
+        content: "♥";
+        color: white;
+        position: absolute;
+        top: 48px;
+        left: 77px;
+        font-size: 28px;
+        z-index: 3;
+      }
+
+      .envelope.open:before {
+        transform: rotateX(180deg);
+        opacity: 0.5;
+      }
+
+      .letter {
+        display: none;
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        text-align: left;
+        line-height: 2;
+        border: 1px solid #f2dada;
+        animation: fadeIn 0.6s;
+      }
+
+      .letter.show {
+        display: block;
+      }
+
+      /* CAKE */
+
+      #cakeScreen {
+        background: #fff9ef;
+      }
+
+      .cake {
+        font-size: 125px;
+        margin: 25px 0;
+        animation: bounce 2s infinite;
+      }
+
+      .candle-status {
+        color: var(--gold);
+        font-weight: 800;
+        margin: 15px 0;
+      }
+
+      /* FINAL */
+
+      #finalScreen {
+        background: var(--red);
+        color: white;
+      }
+
+      #finalScreen h1 {
+        color: white;
+      }
+
+      #finalScreen .card {
+        color: var(--ink);
+      }
+
+      /* CONFETTI */
+
+      .confetti {
+        position: fixed;
+        top: -20px;
+        width: 9px;
+        height: 14px;
+        pointer-events: none;
+        z-index: 100;
+        animation: fall 4s linear forwards;
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(110vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      /* MOBILE */
+
+      @media (max-width: 500px) {
+        .header {
+          padding: 12px;
+        }
+        .brand {
+          font-size: 15px;
+        }
+        .progress {
+          width: 75px;
+        }
+        .card {
+          padding: 25px 17px;
+        }
+        .puzzle-board {
+          transform: scale(0.9);
+          margin-top: 0;
+          margin-bottom: 5px;
+        }
+        .piece {
+          width: 65px;
+          height: 65px;
+        }
+        .piece-shape.left,
+        .piece-shape.right {
+          width: 40px;
+          height: 40px;
+        }
+        .piece-shape.head {
+          width: 48px;
+          height: 48px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- LOADING INTRO -->
+    <section class="screen active" id="loading">
+      <div class="mouse loading-mouse">
+        <div class="ear left"></div>
+        <div class="ear right"></div>
+        <div class="head"></div>
+      </div>
+
+      <h2>Preparing Your Magic...</h2>
+      <p>Something special is coming! ♡</p>
+
+      <div class="loading-track">
+        <div class="loading-bar"></div>
+      </div>
+    </section>
+
+    <!-- HEADER -->
+    <header class="header hidden" id="header">
+      <div class="brand">♡ 2026年11月7日</div>
+
+      <div class="progress-area">
+        <div class="progress">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <span id="stepText">1 / 4</span>
+      </div>
+    </header>
+
+    <!-- MUSIC BUTTON -->
+    <button
+      class="music-btn hidden"
+      id="musicBtn"
+      onclick="toggleMusic()"
+      title="Music On/Off"
+    >
+      ♫
+    </button>
+
+    <!-- HOME -->
+    <section class="screen" id="home">
+      <span class="home-decoration dec1">✨</span>
+      <span class="home-decoration dec2">🎀</span>
+      <span class="home-decoration dec3">♡</span>
+      <span class="home-decoration dec4">⭐</span>
+
+      <span class="home-tag">A SPECIAL DAY FOR SOMEONE SPECIAL</span>
+
+      <h1>HAPPY<br /><span>BIRTHDAY!</span></h1>
+
+      <div class="home-name">Dear, Novisya ♡</div>
+
+      <p class="subtitle">
+        A little magical journey has been prepared especially for you.
+      </p>
+
+      <button class="main-btn" onclick="startGame()">
+        START YOUR ADVENTURE
+      </button>
+
+      <p style="font-size: 12px; color: #aa9999; margin-top: 35px">
+        Created by <b>ZANNATIAMO</b>, just for you.
+      </p>
+    </section>
+
+    <!-- PUZZLE -->
+    <section class="screen" id="puzzleScreen">
+      <h2>Let's Play!</h2>
+      <p class="subtitle">
+        Susun potongan-potongan gambar Mickey menjadi satu gambar utuh!
+      </p>
+
+      <div class="puzzle-card">
+        <div class="puzzle-layout">
+          <div>
+            <div
+              class="puzzle-board"
+              id="puzzleBoard"
+              aria-label="Papan puzzle Mickey"
+            ></div>
+            <p class="puzzle-help">
+              Geser potongan ke kotak yang sesuai. Kamu juga bisa ketuk potongan
+              lalu ketuk kotak tujuan.
+            </p>
+          </div>
+
+          <div class="piece-tray-wrap">
+            <h3 class="tray-title">Potongan Puzzle</h3>
+            <div class="piece-tray" id="pieceTray"></div>
+            <p id="puzzleMessage">0 / 12 pieces completed</p>
+          </div>
+        </div>
+
+        <div class="puzzle-actions">
+          <button class="outline-btn" onclick="createPuzzle()">
+            Acak Ulang
+          </button>
+          <button
+            class="main-btn hidden"
+            id="puzzleNext"
+            onclick="showScreen('letterScreen', 3)"
+          >
+            YOU DID IT! CONTINUE →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- LETTER -->
+    <section class="screen" id="letterScreen">
+      <h2>A Secret Letter 💌</h2>
+
+      <p class="subtitle">Mickey has prepared a little message for you.</p>
+
+      <div class="card">
+        <div class="envelope" id="envelope" onclick="openLetter()"></div>
+
+        <p id="envelopeText" style="color: var(--red)">
+          Tap the envelope to open ♡
+        </p>
+
+        <div class="letter" id="letter">
+          <h2 style="font-size: 26px">Dear 大切な人! ♡</h2>
+
+          <br />
+
+          Happy birthday! 🥳🎂❤️
+
+          <br /><br />
+
+          Selamat bertambah usia. Di umur yang baru ini, setiap langkahmu selalu
+          dipenuhi kebahagiaan, kesehatan, dan keberuntungan.
+
+          <br /><br />
+
+          Semua impian yang sedang kamu perjuangkan bisa tercapai. Jangan
+          terlalu keras sama diri sendiri, jangan lupa bahagia, dan tetap jadi
+          pribadi yang menyenangkan dan menggemaskan.
+
+          <br />
+          Kalau suatu hari keadaan terasa berat, jangan lupa betapa jauh kamu
+          sudah melangkah dan betapa banyak hal yang sudah berhasil kamu lewati.
+          You are doing better than you think. So, keep going and believe in
+          yourself.
+
+          <br /><br />
+          Stay happy, stay strong, and keep shining. You deserve all the good
+          things life has to offer ❤️
+
+          <br /><br />
+          私のこと忘れないでね ☺️
+
+          <br /><br />
+
+          Someone who always wishes to see you happy,
+
+          <h3 style="color: var(--red)">Tiamo ❤️</h3>
+        </div>
+
+        <button
+          class="main-btn hidden"
+          id="letterNext"
+          onclick="showScreen('cakeScreen', 4)"
+          style="margin-top: 25px"
+        >
+          ONE MORE SURPRISE →
+        </button>
+      </div>
+    </section>
+
+    <!-- CAKE -->
+    <section class="screen" id="cakeScreen">
+      <h2>Make A Wish!</h2>
+
+      <p class="subtitle">
+        Close your eyes and make a wish. This moment is all yours.
+      </p>
+
+      <div class="card">
+        <div class="cake" id="cake">🎂</div>
+
+        <h3 style="color: var(--red)">誕生日おめでとう!</h3>
+
+        <p class="candle-status" id="candleStatus">
+          The candles are waiting for you...
+        </p>
+
+        <button class="main-btn" id="blowButton" onclick="blowCandles()">
+          BLOW THE CANDLES
+        </button>
+
+        <div id="cakeResult" class="hidden">
+          <h2 style="margin-top: 25px">WISH GRANTED! ✨</h2>
+
+          <p style="margin: 15px 0">
+            Semoga semua keinginanmu menjadi kenyataan.
+            <br /><br />
+            Keep smiling, keep shining, and always be happy!
+            <br /><br />
+            Happy birthday, beautiful! ♡
+          </p>
+
+          <button class="main-btn" onclick="showScreen('finalScreen', 5)">
+            FINAL SURPRISE
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL -->
+    <section class="screen" id="finalScreen">
+      <div class="card">
+        <h1 style="font-size: 43px; color: #302629">2026年11月7日</h1>
+
+        <p style="margin: 20px 0">
+          One day, one special person, and a thousand reasons to smile.
+          <br /><br />
+          May your life always be as beautiful as your dreams.
+          <br />
+          Sending you lots of love! 🎀
+        </p>
+
+        <h2>♡ ♡ ♡</h2>
+
+        <button
+          class="outline-btn"
+          onclick="location.reload()"
+          style="margin-top: 25px"
+        >
+          PLAY AGAIN ↻
+        </button>
+      </div>
+    </section>
+
+    <script>
+      // ============================
+      // NAVBAR
+      // ============================
+
+      let currentStep = 1;
+
+      function showScreen(id, step) {
+        document
+          .querySelectorAll(".screen")
+          .forEach((s) => s.classList.remove("active"));
+
+        document.getElementById(id).classList.add("active");
+
+        currentStep = step;
+
+        document.getElementById("progressFill").style.width =
+          ((step - 1) / 4) * 100 + "%";
+
+        document.getElementById("stepText").innerText = step + " / 5";
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // ============================
+      // LOADING
+      // ============================
+
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.getElementById("header").classList.remove("hidden");
+
+          document.getElementById("musicBtn").classList.remove("hidden");
+
+          showScreen("home", 1);
+        }, 2500);
+      });
+
+      // ============================
+      // START
+      // ============================
+
+      function startGame() {
+        showScreen("puzzleScreen", 2);
+
+        createPuzzle();
+
+        confetti(25);
+      }
+
+      // ============================
+      // MICKEY JIGSAW PUZZLE GAME
+      // ============================
+
+      const PUZZLE_IMAGE = "mickey_puzzle.jpg";
+      const PUZZLE_COLS = 3;
+      const PUZZLE_ROWS = 4;
+      const TOTAL_PIECES = PUZZLE_COLS * PUZZLE_ROWS;
+
+      let selectedPiece = null;
+      let completedPieces = new Set();
+
+      function setPieceImagePosition(element, index) {
+        const col = index % PUZZLE_COLS;
+        const row = Math.floor(index / PUZZLE_COLS);
+        const x = PUZZLE_COLS === 1 ? 0 : (col / (PUZZLE_COLS - 1)) * 100;
+        const y = PUZZLE_ROWS === 1 ? 0 : (row / (PUZZLE_ROWS - 1)) * 100;
+        element.style.setProperty("--piece-x", x + "%");
+        element.style.setProperty("--piece-y", y + "%");
+      }
+
+      function createPuzzle() {
+        const board = document.getElementById("puzzleBoard");
+        const tray = document.getElementById("pieceTray");
+        const nextButton = document.getElementById("puzzleNext");
+
+        board.innerHTML = "";
+        tray.innerHTML = "";
+        selectedPiece = null;
+        completedPieces = new Set();
+        nextButton.classList.add("hidden");
+
+        // Buat 12 kotak tujuan pada papan.
+        for (let i = 0; i < TOTAL_PIECES; i++) {
+          const slot = document.createElement("button");
+          slot.type = "button";
+          slot.className = "puzzle-slot";
+          slot.dataset.slot = i;
+          slot.innerHTML = `<span class="slot-number">${i + 1}</span>`;
+          slot.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            if (!slot.classList.contains("filled")) slot.classList.add("over");
+          });
+          slot.addEventListener("dragleave", () =>
+            slot.classList.remove("over"),
+          );
+          slot.addEventListener("drop", (event) => {
+            event.preventDefault();
+            slot.classList.remove("over");
+            const pieceIndex = Number(event.dataTransfer.getData("text/plain"));
+            placePiece(pieceIndex, i);
+          });
+          slot.addEventListener("click", () => {
+            if (selectedPiece !== null) placePiece(selectedPiece, i);
+          });
+          board.appendChild(slot);
+        }
+
+        // Acak urutan potongan.
+        const shuffled = Array.from({ length: TOTAL_PIECES }, (_, i) => i).sort(
+          () => Math.random() - 0.5,
+        );
+
+        shuffled.forEach((index) => {
+          const piece = document.createElement("button");
+          piece.type = "button";
+          piece.className = "piece";
+          piece.draggable = true;
+          piece.dataset.piece = index;
+          piece.setAttribute("aria-label", `Potongan puzzle ${index + 1}`);
+          piece.style.setProperty("--puzzle-image", `url("${PUZZLE_IMAGE}")`);
+          setPieceImagePosition(piece, index);
+
+          piece.addEventListener("click", () => selectPiece(index, piece));
+          piece.addEventListener("dragstart", (event) => {
+            selectedPiece = index;
+            event.dataTransfer.setData("text/plain", String(index));
+            event.dataTransfer.effectAllowed = "move";
+            piece.classList.add("selected");
+          });
+          piece.addEventListener("dragend", () =>
+            piece.classList.remove("selected"),
+          );
+          tray.appendChild(piece);
+        });
+
+        // Pasang gambar sebagai latar untuk setiap potongan dan slot.
+        document.querySelectorAll(".puzzle-slot").forEach((slot) => {
+          slot.style.setProperty("--puzzle-image", `url("${PUZZLE_IMAGE}")`);
+        });
+
+        updatePuzzleMessage();
+      }
+
+      function selectPiece(index, element) {
+        if (completedPieces.has(index)) return;
+        document
+          .querySelectorAll(".piece")
+          .forEach((piece) => piece.classList.remove("selected"));
+        selectedPiece = index;
+        element.classList.add("selected");
+        document.getElementById("puzzleMessage").innerText =
+          `Potongan ${index + 1} dipilih. Sekarang pilih kotak tujuan.`;
+      }
+
+      function placePiece(pieceIndex, slotIndex) {
+        if (
+          !Number.isInteger(pieceIndex) ||
+          pieceIndex < 0 ||
+          pieceIndex >= TOTAL_PIECES
+        )
+          return;
+        if (completedPieces.has(pieceIndex)) return;
+
+        const slot = document.querySelector(
+          `.puzzle-slot[data-slot="${slotIndex}"]`,
+        );
+        if (!slot || slot.classList.contains("filled")) return;
+
+        if (pieceIndex === slotIndex) {
+          slot.classList.add("filled");
+          setPieceImagePosition(slot, pieceIndex);
+          slot.innerHTML = "";
+          completedPieces.add(pieceIndex);
+
+          const piece = document.querySelector(
+            `.piece[data-piece="${pieceIndex}"]`,
+          );
+          if (piece) {
+            piece.classList.remove("selected");
+            piece.classList.add("used");
+            piece.draggable = false;
+            piece.disabled = true;
+          }
+
+          selectedPiece = null;
+          updatePuzzleMessage();
+          confetti(8);
+
+          if (completedPieces.size === TOTAL_PIECES) {
+            document.getElementById("puzzleMessage").innerText =
+              "Amazing! Mickey berhasil disusun!";
+            document.getElementById("puzzleNext").classList.remove("hidden");
+            confetti(75);
+          }
+        } else {
+          document.getElementById("puzzleMessage").innerText =
+            "Belum cocok! Coba posisi yang lain ya";
+        }
+      }
+
+      function updatePuzzleMessage() {
+        document.getElementById("puzzleMessage").innerText =
+          `${completedPieces.size} / ${TOTAL_PIECES} pieces completed`;
+      }
+
+      // ============================
+      // OPEN LETTER
+      // ============================
+
+      function openLetter() {
+        document.getElementById("envelope").classList.add("open");
+
+        document.getElementById("letter").classList.add("show");
+
+        document.getElementById("envelopeText").innerText =
+          "A little message just for you ♡";
+
+        document.getElementById("letterNext").classList.remove("hidden");
+
+        confetti(30);
+      }
+
+      // ============================
+      // BIRTHDAY CANDLE
+      // ============================
+
+      function blowCandles() {
+        document.getElementById("cake").innerText = "🍰";
+
+        document.getElementById("candleStatus").innerText =
+          "The wish has been sent! ✨";
+
+        document.getElementById("blowButton").classList.add("hidden");
+
+        document.getElementById("cakeResult").classList.remove("hidden");
+
+        confetti(100);
+      }
+
+      // ============================
+      // CONFETTI
+      // ============================
+
+      function confetti(amount) {
+        const colors = ["#c83d4e", "#e8b94f", "#f7e4e5", "#ffffff"];
+
+        for (let i = 0; i < amount; i++) {
+          const item = document.createElement("div");
+
+          item.className = "confetti";
+
+          item.style.left = Math.random() * 100 + "vw";
+
+          item.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+
+          item.style.animationDuration = Math.random() * 3 + 2 + "s";
+
+          item.style.animationDelay = Math.random() + "s";
+
+          document.body.appendChild(item);
+
+          setTimeout(() => item.remove(), 6000);
+        }
+      }
+
+      // ============================
+      // MUSIC
+      // ============================
+
+      let audio = null;
+      let musicPlaying = false;
+      let musicInterval = null;
+      let noteIndex = 0;
+
+      const melody = [
+        392.0, 392.0, 440.0, 392.0, 523.25, 493.88, 392.0, 392.0, 440.0, 392.0,
+        587.33, 523.25, 92.0, 392.0, 783.99, 659.25, 523.25, 493.88, 440.0,
+        698.46, 698.46, 659.25, 523.25, 587.33, 523.25,
+      ];
+
+      function playNote() {
+        if (!audio || !musicPlaying) return;
+
+        const osc = audio.createOscillator();
+        const gain = audio.createGain();
+
+        osc.type = "sine";
+
+        osc.frequency.value = melody[noteIndex % melody.length];
+
+        gain.gain.setValueAtTime(0.0001, audio.currentTime);
+
+        gain.gain.exponentialRampToValueAtTime(0.045, audio.currentTime + 0.08);
+
+        gain.gain.exponentialRampToValueAtTime(
+          0.0001,
+          audio.currentTime + 0.55,
+        );
+
+        osc.connect(gain);
+        gain.connect(audio.destination);
+
+        osc.start();
+        osc.stop(audio.currentTime + 0.6);
+
+        noteIndex++;
+      }
+
+      function toggleMusic() {
+        if (!audio) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+
+          if (!AudioContext) {
+            alert("Browser tidak mendukung musik.");
+            return;
+          }
+
+          audio = new AudioContext();
+        }
+
+        if (audio.state === "suspended") {
+          audio.resume();
+        }
+
+        musicPlaying = !musicPlaying;
+
+        document.getElementById("musicBtn").innerText = musicPlaying
+          ? "♫"
+          : "♪";
+
+        if (musicPlaying) {
+          playNote();
+
+          musicInterval = setInterval(playNote, 550);
+        } else {
+          clearInterval(musicInterval);
+        }
+      }
+    </script>
+  </body>
+</html>
